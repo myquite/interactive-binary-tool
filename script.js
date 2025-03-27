@@ -28,16 +28,6 @@ function illustrateBinaryConversion() {
 
     // Create initial UI
     createStepUI(state);
-
-    // Add info button to the page
-    const infoButton = document.createElement('button');
-    infoButton.innerHTML = 'How it Works';
-    infoButton.classList.add('info-button');
-    infoButton.onclick = showMethodExplanation;
-    document.querySelector('.conversion-section').insertBefore(
-        infoButton, 
-        document.getElementById('decimalInput')
-    );
 }
 
 function createStepUI(state) {
