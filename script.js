@@ -11,7 +11,8 @@ function illustrateBinaryConversion() {
 
     // Validate input
     if (isNaN(decimal) || decimal < 0 || decimal > 255) {
-        stepsDiv.innerHTML = 'Please enter a valid decimal number between 0 and 255.';
+        stepsDiv.innerHTML = '<div class="error-message">Please enter a valid decimal number between 0 and 255.</div>';
+        explanationDiv.innerHTML = ''; // Clear any previous explanation
         return;
     }
 
@@ -27,6 +28,16 @@ function illustrateBinaryConversion() {
 
     // Create initial UI
     createStepUI(state);
+
+    // Add info button to the page
+    const infoButton = document.createElement('button');
+    infoButton.innerHTML = 'How it Works';
+    infoButton.classList.add('info-button');
+    infoButton.onclick = showMethodExplanation;
+    document.querySelector('.conversion-section').insertBefore(
+        infoButton, 
+        document.getElementById('decimalInput')
+    );
 }
 
 function createStepUI(state) {
@@ -75,7 +86,7 @@ function createStepUI(state) {
                 <div class="final-explanation">
                     ${generateNumberExplanation(state.decimal, state.binaryDigits, state.powers)}
                 </div>
-                <button onclick="illustrateBinaryConversion()">Try Another Number</button>
+                <button onclick="resetAndFocus()">Try Another Number</button>
             </div>
         `;
     }
@@ -137,4 +148,64 @@ function generateNumberExplanation(decimal, binaryDigits, powers) {
     return terms.length > 0 
         ? `<p>${decimal} = ${terms.join(' + ')}</p>`
         : `<p>${decimal} = 0</p>`;
+}
+
+function resetAndFocus() {
+    const decimalInput = document.getElementById('decimalInput');
+    decimalInput.value = '';
+    decimalInput.focus();
+    illustrateBinaryConversion();
+}
+
+function showMethodExplanation() {
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Power of 2 Method for Decimal-to-Binary Conversion</h2>
+            
+            <p class="method-intro">
+                The Power of 2 Method converts decimal numbers to binary by checking which powers of 2 
+                fit into the number, starting from the largest. If a power fits, subtract it and write 1; 
+                if not, write 0.
+            </p>
+
+            <div class="steps-section">
+                <h3>Steps:</h3>
+                <ol>
+                    <li>List powers of 2 (starting from the highest under the number).</li>
+                    <li>Check if each power fits into the number.</li>
+                    <li>Write 1 if it fits (subtract it) or 0 if it doesn't.</li>
+                    <li>Continue until reaching 0.</li>
+                </ol>
+            </div>
+
+            <div class="example-section">
+                <h3>Example: Convert 194 to Binary</h3>
+                <p class="powers">Powers of 2: 128, 64, 32, 16, 8, 4, 2, 1</p>
+                <ul class="conversion-steps">
+                    <li>128 fits → 1 (194 - 128 = 66)</li>
+                    <li>64 fits → 1 (66 - 64 = 2)</li>
+                    <li>32, 16, 8, 4 don't fit → 0000</li>
+                    <li>2 fits → 1 (2 - 2 = 0)</li>
+                    <li>1 doesn't fit → 0</li>
+                </ul>
+                <p class="result">Result: <span class="binary-result">11000010</span> (Binary for 194)</p>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Add close button functionality
+    const closeButton = modal.querySelector('.close-button');
+    closeButton.onclick = () => modal.remove();
+
+    // Close modal when clicking outside
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            modal.remove();
+        }
+    };
 } 
