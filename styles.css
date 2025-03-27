@@ -154,7 +154,21 @@ button:focus {
 }
 
 /* Modal styles */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
 .modal-content {
+    position: relative;
     background-color: var(--terminal-dark);
     border: 0.125rem solid var(--border-color);
     color: var(--terminal-green);
@@ -166,13 +180,18 @@ button:focus {
 }
 
 .close-button {
-    font-size: 1.2rem;
-    color: var(--terminal-green);
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
     cursor: pointer;
+    color: var(--terminal-green);
+    padding: 0.5rem;
 }
 
 .close-button:hover {
-    text-shadow: 0 0 0.5rem var(--terminal-green);
+    color: var(--terminal-dark);
+    background-color: var(--terminal-green);
 }
 
 /* Scrollbar styling */
@@ -334,19 +353,6 @@ button:focus {
 .info-button:hover {
     background-color: var(--terminal-green);
     color: var(--terminal-dark);
-}
-
-.modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--terminal-dark);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
 }
 
 .method-intro {

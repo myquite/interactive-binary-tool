@@ -148,54 +148,23 @@ function resetAndFocus() {
 }
 
 function showMethodExplanation() {
-    const modal = document.createElement('div');
-    modal.classList.add('modal');
-    modal.innerHTML = `
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>Power of 2 Method for Decimal-to-Binary Conversion</h2>
-            
-            <p class="method-intro">
-                The Power of 2 Method converts decimal numbers to binary by checking which powers of 2 
-                fit into the number, starting from the largest. If a power fits, subtract it and write 1; 
-                if not, write 0.
-            </p>
+    document.getElementById('infoModal').style.display = 'flex';
+}
 
-            <div class="steps-section">
-                <h3>Steps:</h3>
-                <ol>
-                    <li>List powers of 2 (starting from the highest under the number).</li>
-                    <li>Check if each power fits into the number.</li>
-                    <li>Write 1 if it fits (subtract it) or 0 if it doesn't.</li>
-                    <li>Continue until reaching 0.</li>
-                </ol>
-            </div>
+function hideMethodExplanation() {
+    document.getElementById('infoModal').style.display = 'none';
+}
 
-            <div class="example-section">
-                <h3>Example: Convert 194 to Binary</h3>
-                <p class="powers">Powers of 2: 128, 64, 32, 16, 8, 4, 2, 1</p>
-                <ul class="conversion-steps">
-                    <li>128 fits → 1 (194 - 128 = 66)</li>
-                    <li>64 fits → 1 (66 - 64 = 2)</li>
-                    <li>32, 16, 8, 4 don't fit → 0000</li>
-                    <li>2 fits → 1 (2 - 2 = 0)</li>
-                    <li>1 doesn't fit → 0</li>
-                </ul>
-                <p class="result">Result: <span class="binary-result">11000010</span> (Binary for 194)</p>
-            </div>
-        </div>
-    `;
+// Add click outside to close
+document.getElementById('infoModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        hideMethodExplanation();
+    }
+});
 
-    document.body.appendChild(modal);
-
-    // Add close button functionality
-    const closeButton = modal.querySelector('.close-button');
-    closeButton.onclick = () => modal.remove();
-
-    // Close modal when clicking outside
-    modal.onclick = (e) => {
-        if (e.target === modal) {
-            modal.remove();
-        }
-    };
-} 
+// Add escape key to close
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && document.getElementById('infoModal').style.display === 'flex') {
+        hideMethodExplanation();
+    }
+}); 
